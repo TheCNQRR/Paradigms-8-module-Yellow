@@ -18,9 +18,7 @@ public class Course {
     public void removeTopicAtIndex(int index) { topics.remove(index); }
     public void removeTopicObject(Topic topic) { topics.remove(topic); }
 
-    public Course(String name) {
-        this.name = name;
-    }
+    public Course(String name) { this.name = name; }
 
     public Module createModule(String name) {
         Module module = new Module(name, this);

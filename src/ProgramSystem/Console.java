@@ -2,6 +2,7 @@ package ProgramSystem;
 
 import java.util.Scanner;
 import Course.CoursesMenu;
+import ProgrammingLanguage.ProgrammingLanguagesMenu;
 
 import static ProgramSystem.Utils.readIntInput;
 
@@ -16,6 +17,10 @@ public class Console {
             switch (choice) {
                 case 1: {
                     CoursesMenu.coursesMenu();
+                    break;
+                }
+                case 11: {
+                    ProgrammingLanguagesMenu.programmingLanguagesMenu();
                     break;
                 }
                 case 0: {
