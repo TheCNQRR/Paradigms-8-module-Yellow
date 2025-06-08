@@ -1,8 +1,8 @@
 package Course;
 
+import Section.Section;
 import Topic.Topic;
 import Module.Module;
-import Section.Section;
 
 import java.util.ArrayList;
 

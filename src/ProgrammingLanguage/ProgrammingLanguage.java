@@ -23,5 +23,4 @@ public class ProgrammingLanguage {
         languages.add("Java");
         languages.add("Python");
     }
-
 }
