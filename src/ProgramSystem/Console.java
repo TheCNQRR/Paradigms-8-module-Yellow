@@ -3,6 +3,7 @@ package ProgramSystem;
 import java.util.Scanner;
 import Course.CoursesMenu;
 import ProgrammingLanguage.ProgrammingLanguagesMenu;
+import AlgorithmicTask.AlgorithmicTasksMenu;
 
 import static ProgramSystem.Utils.readIntInput;
 
@@ -17,6 +18,10 @@ public class Console {
             switch (choice) {
                 case 1: {
                     CoursesMenu.coursesMenu();
+                    break;
+                }
+                case 6: {
+                    AlgorithmicTasksMenu.algorithmicTasksMenu();
                     break;
                 }
                 case 11: {

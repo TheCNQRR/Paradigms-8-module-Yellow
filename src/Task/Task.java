@@ -1,6 +1,8 @@
 package Task;
 
 public abstract class Task {
+    protected String name;
+
     private String taskText;
     public void setTaskText(String taskText) { this.taskText = taskText; }
     public String getTaskText() { return taskText; }

@@ -8,4 +8,19 @@ public class AlgorithmicTasksStorage {
     public static void addAlgorithmicTask(AlgorithmicTask task) { algorithmicTasks.add(task); }
     public static void removeAlgorithmicTaskAtIndex(int index) { algorithmicTasks.remove(index); }
     public static void removeAlgorithmicTaskObject(AlgorithmicTask task) { algorithmicTasks.remove(task); }
+    public static void replaceAlgorithmicTask(int index, AlgorithmicTask task) { algorithmicTasks.set(index, task); }
+    public static void writeAllTasks() {
+        if (algorithmicTasks.isEmpty()) {
+            System.out.println("Список заданий по алгоритмике пуст!");
+        }
+        else {
+            for (int i = 0; i < algorithmicTasks.size(); ++i) {
+                System.out.println("{");
+                System.out.println("Задание " + (i + 1) + ": " + algorithmicTasks.get(i).getName());
+                System.out.println("Текст задания: " + algorithmicTasks.get(i).getTaskText());
+                System.out.println("Пример: " + algorithmicTasks.get(i).getTaskExample());
+                System.out.println("}");
+            }
+        }
+    }
 }
