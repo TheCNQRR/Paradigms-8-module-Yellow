@@ -1,5 +1,7 @@
 package AlgorithmicTask;
 
+import Task.TasksStorage;
+
 import java.util.Scanner;
 
 import static ProgramSystem.Utils.readIntInput;
@@ -23,6 +25,7 @@ public class CRUDAlgorithmicTask {
         algorithmicTask.setTaskExample(taskExample);
 
         AlgorithmicTasksStorage.addAlgorithmicTask(algorithmicTask);
+        TasksStorage.addTask(algorithmicTask);
         System.out.println("Задание по алгоритмике добавлено!");
     }
 
@@ -72,7 +75,7 @@ public class CRUDAlgorithmicTask {
         Scanner scanner = new Scanner(System.in);
 
         AlgorithmicTask newAlgorithmicTask = AlgorithmicTasksStorage.getAlgorithmicTasks().get(choice - 1);
-
+        //TODO интеграция в родительский класс
         switch (option) {
             case 1: {
                 System.out.print("Введите новое название: ");

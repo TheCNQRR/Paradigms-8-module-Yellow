@@ -2,7 +2,7 @@ package Course;
 
 import Section.Section;
 import Topic.Topic;
-import Module.Module;
+import CourseModule.CourseModule;
 
 import java.util.ArrayList;
 
@@ -11,7 +11,7 @@ public class Course {
     public String getName() { return name; }
     public void setName(String name) { this.name = name; }
 
-    private ArrayList<Topic> topics;
+    private ArrayList<Topic> topics = new ArrayList<>();
     public ArrayList<Topic> getTopics() { return new ArrayList<>(topics); }
     public void setTopics(ArrayList<Topic> topics) { this.topics = topics; }
     public void addTopic(Topic topic) { topics.add(topic); }
@@ -24,8 +24,8 @@ public class Course {
 
     public Course(String name) { this.name = name; }
 
-    public Module createModule(String topicName, String name) {
-        Module module = new Module(topicName, name, this);
+    public CourseModule createModule(String topicName, String name) {
+        CourseModule module = new CourseModule(topicName, name, this);
         topics.add(module);
         return module;
     }

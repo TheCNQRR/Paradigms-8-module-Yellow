@@ -14,6 +14,10 @@ public class CoursesMenu {
                     CRUDCourse.createCourse();
                     break;
                 }
+                case 5: {
+                    CoursesStorage.writeAllCourses();
+                    break;
+                }
                 case 0: {
                     return;
                 }
@@ -30,6 +34,7 @@ public class CoursesMenu {
         System.out.println("2. Достать класс");
         System.out.println("3. Обновить класс");
         System.out.println("4. Удалить класс");
+        System.out.println("5. Вывод всех классов");
         System.out.println("0. Выход");
         System.out.print("Выберите опцию: ");
     }

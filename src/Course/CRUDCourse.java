@@ -1,6 +1,7 @@
 package Course;
 
 import java.util.Scanner;
+import Topic.CRUDTopic;
 
 import static ProgramSystem.Utils.readIntInput;
 
@@ -24,15 +25,21 @@ public class CRUDCourse {
 
         switch (choiceForTopic) {
             case 1: {
+                CRUDTopic.createTopic(course);
                 break;
             }
             case 2: {
-
+                System.out.println("Добавление темы пропущено. Вы можете добавить тему позднее!");
+                break;
             }
             default: {
                 System.out.println("Ошибка, неверная команда!");
             }
         }
         System.out.println("Класс добавлен!");
+    }
+
+    public static void updateCourse() {
+
     }
 }
