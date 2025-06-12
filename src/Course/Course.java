@@ -17,11 +17,15 @@ public class Course {
     public void addTopic(Topic topic) { topics.add(topic); }
     public void removeTopicAtIndex(int index) { topics.remove(index); }
     public void removeTopicObject(Topic topic) { topics.remove(topic); }
+    //TODO полный вывод курса
+    public void writeCourse(Course course) {
+        System.out.println("Название курса: " + course.getName());
+    }
 
     public Course(String name) { this.name = name; }
 
-    public Module createModule(String name) {
-        Module module = new Module(name, this);
+    public Module createModule(String topicName, String name) {
+        Module module = new Module(topicName, name, this);
         topics.add(module);
         return module;
     }

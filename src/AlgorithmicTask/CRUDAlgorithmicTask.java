@@ -4,7 +4,47 @@ import java.util.Scanner;
 
 import static ProgramSystem.Utils.readIntInput;
 
-public class UpdateAlgorithmicTask {
+public class CRUDAlgorithmicTask {
+    public static void createAlgorithmicTask() {
+        Scanner scanner = new Scanner(System.in);
+
+        AlgorithmicTask algorithmicTask = new AlgorithmicTask();
+
+        System.out.print("Введите название задания по алгоритмике: ");
+        String name = scanner.nextLine();
+        algorithmicTask.setName(name);
+
+        System.out.print("Введите текст задания: ");
+        String taskText = scanner.nextLine();
+        algorithmicTask.setTaskText(taskText);
+
+        System.out.print("Введите пример: ");
+        String taskExample = scanner.nextLine();
+        algorithmicTask.setTaskExample(taskExample);
+
+        AlgorithmicTasksStorage.addAlgorithmicTask(algorithmicTask);
+        System.out.println("Задание по алгоритмике добавлено!");
+    }
+
+    public static void retrieveAlgorithmicTask() {
+        if (AlgorithmicTasksStorage.getAlgorithmicTasks().isEmpty()) {
+            System.out.println("Список заданий по алгоритмике пуст!");
+            return;
+        }
+
+        AlgorithmicTasksStorage.writeAllTasks();
+
+        System.out.print("Введите номер задания, которое хотите достать: ");
+        int choice = readIntInput();
+
+        if (choice > AlgorithmicTasksStorage.getAlgorithmicTasks().size() || choice < 1) {
+            System.out.println("Ошибка, вы ввели неверный номер!");
+            return;
+        }
+
+        AlgorithmicTasksStorage.getAlgorithmicTasks().get(choice - 1).writeAlgorithmicTask();
+    }
+
     public static void updateAlgorithmicTask() {
         if (AlgorithmicTasksStorage.getAlgorithmicTasks().isEmpty()) {
             System.out.println("Список заданий по алгоритмике пуст!");
@@ -65,5 +105,25 @@ public class UpdateAlgorithmicTask {
                 System.out.println("Ошибка, вы ввели неверную команду!");
             }
         }
+    }
+
+    public static void deleteAlgorithmicTask() {
+        if (AlgorithmicTasksStorage.getAlgorithmicTasks().isEmpty()) {
+            System.out.println("Список заданий по алгоритмике пуст!");
+            return;
+        }
+
+        AlgorithmicTasksStorage.writeAllTasks();
+
+        System.out.print("Введите номер задания, которое хотите удалить: ");
+        int choice = readIntInput();
+
+        if (choice > AlgorithmicTasksStorage.getAlgorithmicTasks().size() || choice < 1) {
+            System.out.println("Ошибка, вы ввели неверный номер!");
+            return;
+        }
+
+        AlgorithmicTasksStorage.removeAlgorithmicTaskAtIndex(choice - 1);
+        System.out.println("Задание удалено!");
     }
 }

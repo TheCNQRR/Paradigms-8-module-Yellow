@@ -11,19 +11,19 @@ public class AlgorithmicTasksMenu {
 
             switch(choice) {
                 case 1: {
-                    CreateAlgorithmicTask.createAlgorithmicTask();
+                    CRUDAlgorithmicTask.createAlgorithmicTask();
                     break;
                 }
                 case 2: {
-                    RetrieveAlgorithmicTask.retrieveAlgorithmicTask();
+                    CRUDAlgorithmicTask.retrieveAlgorithmicTask();
                     break;
                 }
                 case 3: {
-                    UpdateAlgorithmicTask.updateAlgorithmicTask();
+                    CRUDAlgorithmicTask.updateAlgorithmicTask();
                     break;
                 }
                 case 4: {
-                    DeleteAlgorithmicTask.deleteAlgorithmicTask();
+                    CRUDAlgorithmicTask.deleteAlgorithmicTask();
                     break;
                 }
                 case 5: {

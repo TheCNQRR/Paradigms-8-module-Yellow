@@ -6,18 +6,14 @@ import Topic.Topic;
 import java.util.ArrayList;
 
 public class Module extends Topic {
-    private final ArrayList<Topic> topics = new ArrayList<>();
-    public void addTopic(Topic topic) {
-        if (topic.getCourse() != this.course) {
-            throw new IllegalArgumentException("Topic.Topic must belong to the same course");
-        }
-        topics.add(topic);
-    }
-    public ArrayList<Topic> getTopics() { return new ArrayList<>(topics); }
+    private String moduleName;
+    public String getModuleName() { return moduleName; }
+    public void setModuleName(String moduleName) { this.moduleName = moduleName; }
 
-    public Module(String name, Course course) {
+    public Module(String topicName, String moduleName, Course course) {
         super(course);
-        this.name = name;
+        this.name = topicName;
+        this.moduleName = moduleName;
     }
 
     @Override

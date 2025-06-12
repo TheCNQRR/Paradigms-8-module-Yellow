@@ -11,7 +11,7 @@ public class CoursesMenu {
 
             switch (choice) {
                 case 1: {
-                    CreateCourse.createCourse();
+                    CRUDCourse.createCourse();
                     break;
                 }
                 case 0: {

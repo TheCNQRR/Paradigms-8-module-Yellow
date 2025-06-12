@@ -11,19 +11,19 @@ public class ProgrammingLanguagesMenu {
 
             switch (choice) {
                 case 1: {
-                    CreateProgrammingLanguage.createProgrammingLanguage();
+                    CRUDProgrammingLanguage.createProgrammingLanguage();
                     break;
                 }
                 case 2: {
-                    RetrieveProgrammingLanguage.retrieveProgrammingLanguage();
+                    CRUDProgrammingLanguage.retrieveProgrammingLanguage();
                     break;
                 }
                 case 3: {
-                    UpdateProgrammingLanguage.updateProgrammingLanguage();
+                    CRUDProgrammingLanguage.updateProgrammingLanguage();
                     break;
                 }
                 case 4: {
-                    DeleteProgrammingLanguage.deleteProgrammingLanguage();
+                    CRUDProgrammingLanguage.deleteProgrammingLanguage();
                     break;
                 }
                 case 5: {
