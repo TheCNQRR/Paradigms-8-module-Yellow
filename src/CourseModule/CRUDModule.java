@@ -13,6 +13,7 @@ public class CRUDModule {
         moduleName = scanner.nextLine();
         CourseModule module = new CourseModule(topicName, moduleName, course);
         course.addTopic(module);
+        course.addModule(module);
 
         ModulesStorage.addModule(module);
         System.out.println("Модуль добавлен!");

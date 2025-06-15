@@ -14,6 +14,10 @@ public class CoursesMenu {
                     CRUDCourse.createCourse();
                     break;
                 }
+                case 3: {
+                    CRUDCourse.updateCourse();
+                    break;
+                }
                 case 5: {
                     CoursesStorage.writeAllCourses();
                     break;

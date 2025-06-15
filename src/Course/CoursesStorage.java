@@ -42,17 +42,17 @@ public class CoursesStorage {
                         System.out.println("Название класса " + (i + 1) + ": " + courses.get(i).getName());
                         System.out.println("Список тем: ");
                         System.out.println("[");
-                        for (int j = 0; j < courses.get(i).getTopics().size(); ++j) {
-                            System.out.println("Название темы " + (j + 1) + ": " + courses.get(i).getTopics().get(j).getName());
+                        for (int j = 0; j < courses.get(i).getTopicsNames().size(); ++j) {
+                            System.out.println("Название темы " + (j + 1) + ": " + courses.get(i).getTopicsNames().get(j));
                         }
                         System.out.println("]");
                         System.out.println("Список модулей: ");
                         System.out.println("[");
-                        for (int j = 0; j < courses.get(i).getTopics().size(); ++j) {
-                            Topic topic = courses.get(i).getTopics().get(j);
+                        for (int k = 0; k < courses.get(i).getTopics().size(); ++k) {
+                            Topic topic = courses.get(i).getTopics().get(k);
                             if (topic instanceof CourseModule) {
                                 CourseModule module = (CourseModule) topic;
-                                System.out.println("Название модуля " + (j + 1) + ": " + module.getModuleName());
+                                System.out.println("Название модуля " + (k + 1) + ": " + module.getModuleName());
                             }
                         }
                         System.out.println("]");
@@ -60,6 +60,9 @@ public class CoursesStorage {
                         System.out.println("}");
                     }
                     break;
+                }
+                default: {
+                    System.out.println("Ошибка, неверная команда!");
                 }
             }
         }

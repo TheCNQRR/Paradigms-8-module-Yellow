@@ -14,6 +14,7 @@ public class CRUDTopic {
 
         System.out.print("Введите название темы: ");
         topicName = scanner.nextLine();
+        course.addTopicName(topicName);
 
         System.out.println("Добавление модуля/секции в тему");
         System.out.println("1. Создать модуль");
