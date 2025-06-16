@@ -26,7 +26,7 @@ public class Course {
         System.out.println("Тема с названием \"" + topics.get(index).getName() + "\"");
     }
     public void writeTopics() {
-        if (topics.isEmpty()) {
+        if (topicsNames.isEmpty()) {
             System.out.println("Список тем пуст!");
         }
         else {
@@ -51,9 +51,16 @@ public class Course {
             System.out.println("Модуль " + (i + 1) + ": " + course.modules.get(i).getModuleName());
         }
     }
-
     public void removeModuleAtIndex(int index) {
-        modules.remove(index);
+        CourseModule module = modules.get(index);
+        modules.remove(module.getParent());
+        for (int i = 0; i < module.getChildren().size(); ++i) {
+            modules.remove(module.getChildren().get(i));
+        }
+        module.getParent().removeChildrenObject(module);
+        module.removeAllChildren();
+        module.removeParent();
+        modules.remove(module);
     }
 
 

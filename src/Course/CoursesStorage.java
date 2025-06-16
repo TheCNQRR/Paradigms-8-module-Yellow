@@ -15,9 +15,9 @@ public class CoursesStorage {
     public static void removeCourseAtIndex(int index) { courses.remove(index); }
     public static void removeCourseObject(Course course) { courses.remove(course); }
     public static void writeAllCourses() {
-        //TODO в полной структуре предлагать выбор вывода просто курса или полной информации о каждом
         if (courses.isEmpty()) {
             System.out.println("Список классов пуст!");
+            return;
         }
         else {
             System.out.println("Вывод информации о классах");
@@ -39,7 +39,7 @@ public class CoursesStorage {
                 case 2: {
                     for (int i = 0; i < courses.size(); ++i) {
                         System.out.println("{");
-                        System.out.println("Класс " + (i + 1) + ": " + courses.get(i).getName());
+                        System.out.println("|Класс " + (i + 1) + ": " + courses.get(i).getName());
                         courses.get(i).writeModulesInCourse(courses.get(i));
 
                     }

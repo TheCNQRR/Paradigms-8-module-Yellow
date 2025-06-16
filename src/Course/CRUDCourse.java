@@ -43,7 +43,35 @@ public class CRUDCourse {
         System.out.println("Класс добавлен!");
     }
 
+    public static void retrieveCourse() {
+        if (CoursesStorage.getCourses().isEmpty()) {
+            System.out.println("Список классов пуст!");
+            return;
+        }
+
+        for (int i = 0; i < CoursesStorage.getCourses().size(); ++i) {
+            System.out.println("{");
+            System.out.println("Название класса " + (i + 1) + ": " + CoursesStorage.getCourses().get(i).getName());
+            System.out.println("}");
+        }
+
+        System.out.print("Введите номер класса, который хотите достать: ");
+        int retrieveCourse = readIntInput();
+
+        if (retrieveCourse < 1 || retrieveCourse > CoursesStorage.getCourses().size()) {
+            System.out.println("Ошибка, вы ввели неверный номер!");
+        }
+        else {
+            System.out.println("|Класс :" + CoursesStorage.getCourses().get(retrieveCourse - 1).getName());
+            CoursesStorage.getCourses().get(retrieveCourse - 1).writeModulesInCourse(CoursesStorage.getCourses().get(retrieveCourse - 1));
+        }
+    }
+
     public static void updateCourse() {
+        if (CoursesStorage.getCourses().isEmpty()) {
+            System.out.println("Список классов пуст!");
+            return;
+        }
         CoursesStorage.writeAllCourses();
         System.out.print("Введите номер класса, который вы хотите обновить: ");
         int choice = readIntInput();
@@ -77,11 +105,31 @@ public class CRUDCourse {
         }
     }
 
+    public static void deleteCourse() {
+        if (CoursesStorage.getCourses().isEmpty()) {
+            System.out.println("Список классов пуст!");
+            return;
+        }
+
+        CoursesStorage.writeAllCourses();
+        System.out.print("Введите номер класса, который хотите удалить: ");
+        int deletingCourse = readIntInput();
+
+        if (deletingCourse < 1 || deletingCourse > CoursesStorage.getCourses().size()) {
+            System.out.println("Ошибка, вы ввели неверный номер!");
+        }
+        else {
+            CoursesStorage.removeCourseAtIndex(deletingCourse - 1);
+            System.out.println("Класс удалён!");
+        }
+    }
+
     public static void updateTopics(Course course) {
         Scanner scanner = new Scanner(System.in);
 
-        if (course.getTopics().isEmpty()) {
-            CRUDTopic.createTopic(course);
+        if (course.getTopicsNames().isEmpty()) {
+            System.out.println("Список тем пуст!");
+            return;
         }
         else {
             System.out.println("Редактирование тем");
@@ -141,8 +189,9 @@ public class CRUDCourse {
     public static void updateModules(Course course) {
         Scanner scanner = new Scanner(System.in);
 
-        if (course.getTopics().isEmpty()) {
-            CRUDTopic.createTopic(course);
+        if (course.getTopicsNames().isEmpty()) {
+            System.out.println("Список тем пуст, сперва создайте тему!");
+            return;
         }
         else {
             System.out.println("Редактирование модулей");
@@ -155,7 +204,7 @@ public class CRUDCourse {
 
             switch (choiceForModule) {
                 case 1: {
-                    if (course.getTopics().isEmpty()) {
+                    if (course.getTopicsNames().isEmpty()) {
                         System.out.println("Список тем пуст, сперва создайте тему!");
                         return;
                     }
@@ -206,6 +255,7 @@ public class CRUDCourse {
                                             }
                                         }
                                     }
+                                    course.addModule(newModule);
                                     System.out.println("Модуль добавлен!");
                                 }
                                 break;
@@ -218,49 +268,56 @@ public class CRUDCourse {
                     break;
                 }
                 case 2: {
-                    course.writeTopics();
-                    System.out.print("Введите номер темы, внутри которой будет удалён модуль: ");
-                    int topicNumber = readIntInput();
-                    if (topicNumber < 1 || topicNumber > course.getTopics().size()) {
+                    course.writeModules(course);
+                    System.out.print("Введите номер модуля, который хотите удалить: ");
+                    int deletingModule = readIntInput();
+                    if (deletingModule < 1 || deletingModule > course.getModules().size()) {
                         System.out.println("Ошибка, вы ввели неверный номер!");
-                        return;
                     }
                     else {
-                        course.writeModules(course);
-                        System.out.print("Введите номер модуля, который хотите удалить: ");
-                        int deletingModule = readIntInput();
-
-                        if (deletingModule < 1 || deletingModule > course.getModules().size()) {
-                            System.out.println("Ошибка, вы ввели неверный номер!");
+                        CourseModule module = course.getModules().get(deletingModule - 1);
+                        for (int i = 0; i < course.getTopics().size(); ++i) {
+                            Topic topic = course.getTopics().get(i);
+                            if (topic instanceof CourseModule) {
+                                CourseModule tempModule = (CourseModule) topic;
+                                if (tempModule == module) {
+                                    course.removeTopicAtIndex(i);
+                                    break;
+                                }
+                            }
                         }
-                        else {
-                            course.removeModuleAtIndex(deletingModule - 1);
-                            System.out.println("Модуль удалён!");
-                        }
-                        break;
+                        course.removeModuleAtIndex(deletingModule - 1);
+                        System.out.println("Модуль удалён!");
                     }
-
+                    break;
                 }
                 case 3: {
                     course.writeModules(course);
                     System.out.print("Введите номер модуля, который хотите редактировать: ");
                     int updatingModule = readIntInput();
-                    if (updatingModule < 1 || updatingModule > course.getTopics().size()) {
+                    if (updatingModule < 1 || updatingModule > course.getModules().size()) {
                         System.out.println("Ошибка, вы ввели неверный номер!");
                     }
                     else {
                         System.out.print("Введите новое название модуля: ");
                         String newName = scanner.nextLine();
                         CourseModule module = course.getModules().get(updatingModule - 1);
-                        String previousName = module.getModuleName();
-                        module.setModuleName(newName);
-                        course.replaceModule(updatingModule - 1, module);
+
+                        CourseModule originalModule = module;
+                        originalModule.setModuleName(newName);
+                        course.replaceModule(updatingModule - 1, originalModule);
+
                         for (int i = 0; i < course.getTopics().size(); ++i) {
                             Topic topic = course.getTopics().get(i);
-                            if (topic instanceof CourseModule && ((CourseModule) topic).getModuleName().equals(previousName)) {
-                                course.replaceTopic(i, module);
+                            if (topic instanceof CourseModule) {
+                                CourseModule temp = (CourseModule) topic;
+                                if (temp == originalModule) {
+                                    temp.setModuleName(newName);
+                                    course.replaceTopic(i, temp);
+                                }
                             }
                         }
+
                         System.out.println("Название модуля изменено!");
                     }
                     break;

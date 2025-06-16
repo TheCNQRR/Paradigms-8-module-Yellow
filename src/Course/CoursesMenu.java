@@ -14,8 +14,16 @@ public class CoursesMenu {
                     CRUDCourse.createCourse();
                     break;
                 }
+                case 2: {
+                    CRUDCourse.retrieveCourse();
+                    break;
+                }
                 case 3: {
                     CRUDCourse.updateCourse();
+                    break;
+                }
+                case 4: {
+                    CRUDCourse.deleteCourse();
                     break;
                 }
                 case 5: {
