@@ -12,6 +12,7 @@ public class CRUDModule {
         System.out.print("Введите название модуля: ");
         moduleName = scanner.nextLine();
         CourseModule module = new CourseModule(topicName, moduleName, course);
+        module.setParent(module);
         course.addTopic(module);
         course.addModule(module);
 

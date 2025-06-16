@@ -82,8 +82,8 @@ public class CRUDCourse {
 
         if (course.getTopics().isEmpty()) {
             CRUDTopic.createTopic(course);
-        } else {
-            course.writeTopics();
+        }
+        else {
             System.out.println("Редактирование тем");
             System.out.println("1. Добавить новую тему");
             System.out.println("2. Удалить тему");
@@ -98,6 +98,7 @@ public class CRUDCourse {
                     break;
                 }
                 case 2: {
+                    course.writeTopics();
                     System.out.print("Введите номер темы, которую хотите удалить: ");
                     int deletingTopic = readIntInput();
 
@@ -112,6 +113,7 @@ public class CRUDCourse {
                     break;
                 }
                 case 3: {
+                    course.writeTopics();
                     System.out.print("Введите номер темы, которую хотите редактировать: ");
                     int updatingTopic = readIntInput();
                     if (updatingTopic < 1 || updatingTopic > course.getTopics().size()) {
@@ -141,8 +143,8 @@ public class CRUDCourse {
 
         if (course.getTopics().isEmpty()) {
             CRUDTopic.createTopic(course);
-        } else {
-            course.writeModules(course);
+        }
+        else {
             System.out.println("Редактирование модулей");
             System.out.println("1. Добавить новый модуль");
             System.out.println("2. Удалить модуль");
@@ -158,15 +160,59 @@ public class CRUDCourse {
                         return;
                     }
                     else {
-                        course.writeTopics();
-                        System.out.print("Введите номер темы, внутри которой будет создан модуль: ");
-                        int updatingModule = readIntInput();
-                        if (updatingModule < 1 || updatingModule > course.getTopics().size()) {
-                            System.out.println("Ошибка, вы ввели неверный номер!");
-                            return;
-                        }
-                        else {
-                            CRUDModule.createModule(course.getTopics().get(updatingModule - 1).getName(), course);
+                        System.out.println("Где вы хотите создать модуль?");
+                        System.out.println("1. Внутри темы");
+                        System.out.println("2. Внутри модуля");
+                        System.out.print("Выберите опцию: ");
+                        int choiceForCreate = readIntInput();
+                        switch (choiceForCreate) {
+                            case 1: {
+                                course.writeTopics();
+                                System.out.print("Введите номер темы, внутри которой будет создан модуль: ");
+                                int updatingModule = readIntInput();
+                                if (updatingModule < 1 || updatingModule > course.getTopics().size()) {
+                                    System.out.println("Ошибка, вы ввели неверный номер!");
+                                    return;
+                                }
+                                else {
+                                    CRUDModule.createModule(course.getTopics().get(updatingModule - 1).getName(), course);
+                                }
+                                break;
+                            }
+                            case 2: {
+                                course.writeModules(course);
+                                System.out.print("Введите номер модуля, внутри которого будет создан модуль: ");
+                                int choiceForCreateModule = readIntInput();
+
+                                if (choiceForCreateModule < 1 || choiceForCreateModule > course.getModules().size()) {
+                                    System.out.println("Ошибка, вы ввели неверный номер!");
+                                    return;
+                                }
+                                else {
+                                    CourseModule module = course.getModules().get(choiceForCreateModule - 1);
+
+                                    System.out.print("Введите название нового модуля: ");
+                                    String name = scanner.nextLine();
+                                    CourseModule newModule = new CourseModule(module.getName(), name, course);
+                                    newModule.setParent(module);
+                                    module.addChildren(newModule);
+                                    for (int i = 0; i < course.getTopics().size(); ++i) {
+                                        Topic topic = course.getTopics().get(i);
+                                        if (topic instanceof CourseModule) {
+                                            CourseModule tempModule = (CourseModule) topic;
+                                            if (tempModule.getModuleName().equals(module.getModuleName())) {
+                                                course.replaceTopic(i, tempModule);
+                                                break;
+                                            }
+                                        }
+                                    }
+                                    System.out.println("Модуль добавлен!");
+                                }
+                                break;
+                            }
+                            default: {
+                                System.out.println("Ошибка, неверная команда!");
+                            }
                         }
                     }
                     break;
@@ -196,19 +242,26 @@ public class CRUDCourse {
 
                 }
                 case 3: {
-                    System.out.print("Введите номер темы, которую хотите редактировать: ");
-                    int updatingTopic = readIntInput();
-                    if (updatingTopic < 1 || updatingTopic > course.getTopics().size()) {
+                    course.writeModules(course);
+                    System.out.print("Введите номер модуля, который хотите редактировать: ");
+                    int updatingModule = readIntInput();
+                    if (updatingModule < 1 || updatingModule > course.getTopics().size()) {
                         System.out.println("Ошибка, вы ввели неверный номер!");
                     }
                     else {
-                        course.writeTopicAtIndex(updatingTopic - 1);
-                        System.out.print("Введите новое название темы: ");
+                        System.out.print("Введите новое название модуля: ");
                         String newName = scanner.nextLine();
-                        Topic topic = course.getTopics().get(updatingTopic - 1);
-                        topic.setName(newName);
-                        course.replaceTopic(updatingTopic - 1, topic);
-                        System.out.println("Название темы изменено!");
+                        CourseModule module = course.getModules().get(updatingModule - 1);
+                        String previousName = module.getModuleName();
+                        module.setModuleName(newName);
+                        course.replaceModule(updatingModule - 1, module);
+                        for (int i = 0; i < course.getTopics().size(); ++i) {
+                            Topic topic = course.getTopics().get(i);
+                            if (topic instanceof CourseModule && ((CourseModule) topic).getModuleName().equals(previousName)) {
+                                course.replaceTopic(i, module);
+                            }
+                        }
+                        System.out.println("Название модуля изменено!");
                     }
                     break;
                 }

@@ -19,6 +19,7 @@ public class Course {
     public void removeTopicAtIndex(int index) { topics.remove(index); }
     public void removeTopicObject(Topic topic) { topics.remove(topic); }
     public void replaceTopic(int index, Topic topic) { topics.set(index, topic); }
+
     //TODO полный вывод курса
     public void writeCourse(Course course) { System.out.println("Название курса: " + course.getName()); }
     public void writeTopicAtIndex(int index) {
@@ -44,11 +45,13 @@ public class Course {
     private final ArrayList<CourseModule> modules = new ArrayList<>();
     public ArrayList<CourseModule> getModules() { return new ArrayList<>(modules); }
     public void addModule(CourseModule module) { modules.add(module); }
+    public void replaceModule(int index, CourseModule module) { modules.set(index, module); }
     public void writeModules(Course course) {
         for (int i = 0; i < course.modules.size(); ++i) {
             System.out.println("Модуль " + (i + 1) + ": " + course.modules.get(i).getModuleName());
         }
     }
+
     public void removeModuleAtIndex(int index) {
         modules.remove(index);
     }
@@ -66,5 +69,43 @@ public class Course {
         Section section = new Section(name, this);
         topics.add(section);
         return section;
+    }
+
+    public void writeModulesInCourse(Course course) {
+        if (course.topicsNames.isEmpty()) {
+            System.out.println("Список тем пуст!");
+            return;
+        }
+
+        for (int i = 0; i < topicsNames.size(); ++i) {
+            System.out.println("|-Тема " + (i + 1) + ": " + topicsNames.get(i));
+            int moduleCounter = 1;
+
+            for (Topic topic : topics) {
+                if (topic instanceof CourseModule) {
+                    CourseModule module = (CourseModule) topic;
+                    if (module.getName().equals(topicsNames.get(i))) {
+                        System.out.println("|--Модуль " + moduleCounter + ": " + module.getModuleName());
+                        moduleCounter++;
+
+                        if (!module.getChildren().isEmpty()) {
+                            printNestedModules(module, 3);
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    private void printNestedModules(CourseModule parentModule, int depth) {
+        int childCounter = 1;
+        for (CourseModule child : parentModule.getChildren()) {
+            System.out.println("|" + "-".repeat(depth) + "Модуль " + childCounter + ": " + child.getModuleName());
+            childCounter++;
+
+            if (!child.getChildren().isEmpty()) {
+                printNestedModules(child, depth + 1);
+            }
+        }
     }
 }
