@@ -20,7 +20,6 @@ public class Course {
     public void removeTopicObject(Topic topic) { topics.remove(topic); }
     public void replaceTopic(int index, Topic topic) { topics.set(index, topic); }
 
-    //TODO полный вывод курса
     public void writeCourse(Course course) { System.out.println("Название курса: " + course.getName()); }
     public void writeTopicAtIndex(int index) {
         System.out.println("Тема с названием \"" + topics.get(index).getName() + "\"");

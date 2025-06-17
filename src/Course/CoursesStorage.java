@@ -41,7 +41,7 @@ public class CoursesStorage {
                         System.out.println("{");
                         System.out.println("|Класс " + (i + 1) + ": " + courses.get(i).getName());
                         courses.get(i).writeModulesInCourse(courses.get(i));
-
+                        System.out.println("}");
                     }
                     break;
                 }
