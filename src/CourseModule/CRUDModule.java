@@ -2,6 +2,7 @@ package CourseModule;
 
 import Course.Course;
 import Course.CoursesStorage;
+import Course.CRUDCourse;
 import Topic.Topic;
 
 import java.util.Scanner;
@@ -100,6 +101,12 @@ public class CRUDModule {
                 modulesNumber++;
             }
         }
+
+        if (modulesNumber == 0) {
+            System.out.println("Список модулей пуст!");
+            return;
+        }
+
         System.out.print("Введите номер модуля, который хотите достать: ");
         int retrieveModule = readIntInput();
 
@@ -111,7 +118,6 @@ public class CRUDModule {
             int temp = 0;
             for (int i = 0; i < CoursesStorage.getCourses().size(); ++i) {
                 for (int j = 0; j < CoursesStorage.getCourses().get(i).getModules().size(); ++j) {
-                    System.out.println(CoursesStorage.getCourses().get(i).getModules().get(j).getModuleName());
                     temp++;
                     if (retrieveModule == temp) {
                         System.out.println("Информация о модуле: ");
@@ -134,11 +140,81 @@ public class CRUDModule {
     }
 
     public static void updateModule() {
+        Scanner scanner = new Scanner(System.in);
+        CoursesStorage.writeAllCourses();
+        System.out.print("Введите номер класса, в котором вы хотите изменить модуль: ");
+        int updatingCourse = readIntInput();
 
+        if (updatingCourse < 1 || updatingCourse > CoursesStorage.getCourses().size()) {
+            System.out.println("Ошибка, вы ввели неверный номер!");
+            return;
+        }
+        else {
+            Course course = CoursesStorage.getCourses().get(updatingCourse - 1);
+            course.writeModules(course);
+            System.out.print("Введите номер модуля, который хотите редактировать: ");
+            int updatingModule = readIntInput();
+            if (updatingModule < 1 || updatingModule > course.getModules().size()) {
+                System.out.println("Ошибка, вы ввели неверный номер!");
+            }
+            else {
+                System.out.print("Введите новое название модуля: ");
+                String newName = scanner.nextLine();
+                CourseModule module = course.getModules().get(updatingModule - 1);
+
+                CourseModule originalModule = module;
+                originalModule.setModuleName(newName);
+                course.replaceModule(updatingModule - 1, originalModule);
+
+                for (int i = 0; i < course.getTopics().size(); ++i) {
+                    Topic topic = course.getTopics().get(i);
+                    if (topic instanceof CourseModule) {
+                        CourseModule temp = (CourseModule) topic;
+                        if (temp == originalModule) {
+                            temp.setModuleName(newName);
+                            course.replaceTopic(i, temp);
+                        }
+                    }
+                }
+                System.out.println("Название модуля изменено!");
+            }
+        }
     }
 
     public static void deleteModule() {
+        Scanner scanner = new Scanner(System.in);
+        CoursesStorage.writeAllCourses();
+        System.out.print("Введите номер класса, в котором вы хотите удалить модуль: ");
+        int updatingCourse = readIntInput();
 
+        if (updatingCourse < 1 || updatingCourse > CoursesStorage.getCourses().size()) {
+            System.out.println("Ошибка, вы ввели неверный номер!");
+            return;
+        }
+        else {
+            Course course = CoursesStorage.getCourses().get(updatingCourse - 1);
+            course.writeModules(course);
+            System.out.print("Введите номер модуля, который хотите удалить: ");
+            int deletingModule = readIntInput();
+            if (deletingModule < 1 || deletingModule > course.getModules().size()) {
+                System.out.println("Ошибка, вы ввели неверный номер!");
+            }
+            else {
+                CourseModule module = course.getModules().get(deletingModule - 1);
+                for (int i = 0; i < course.getTopics().size(); ++i) {
+                    Topic topic = course.getTopics().get(i);
+                    if (topic instanceof CourseModule) {
+                        CourseModule tempModule = (CourseModule) topic;
+                        if (tempModule == module) {
+                            course.removeTopicAtIndex(i);
+                            break;
+                        }
+                    }
+                }
+                course.removeModuleAtIndex(deletingModule - 1);
+                System.out.println("Модуль удалён!");
+            }
+        }
     }
 
     public static void createModuleInCourse(String topicName, Course course) {
