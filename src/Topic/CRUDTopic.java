@@ -36,7 +36,7 @@ public class CRUDTopic {
 
         switch (choice) {
             case 1: {
-                CRUDModule.createModule(topicName, course);
+                CRUDModule.createModuleInCourse(topicName, course);
                 break;
             }
             case 2: {

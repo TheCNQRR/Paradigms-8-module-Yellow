@@ -224,7 +224,7 @@ public class CRUDCourse {
                                     return;
                                 }
                                 else {
-                                    CRUDModule.createModule(course.getTopics().get(updatingModule - 1).getName(), course);
+                                    CRUDModule.createModuleInCourse(course.getTopics().get(updatingModule - 1).getName(), course);
                                 }
                                 break;
                             }

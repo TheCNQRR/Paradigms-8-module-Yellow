@@ -1,11 +1,147 @@
 package CourseModule;
 
 import Course.Course;
+import Course.CoursesStorage;
+import Topic.Topic;
 
 import java.util.Scanner;
 
+import static ProgramSystem.Utils.readIntInput;
+
 public class CRUDModule {
-    public static void createModule(String topicName, Course course) {
+    public static void createModule() {
+        if (CoursesStorage.getCourses().isEmpty()) {
+            System.out.println("Список классов пуст, сперва создайте класс!");
+            return;
+        }
+
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Создание модуля");
+        CoursesStorage.writeAllCourses();
+        System.out.print("Введите номер класса внутри которого будет создан модуль: ");
+        int courseNumber = readIntInput();
+
+        if (courseNumber < 1 || courseNumber > CoursesStorage.getCourses().size()) {
+            System.out.println("Ошибка, вы ввели неверный номер!");
+            return;
+        }
+        else {
+            Course course = CoursesStorage.getCourses().get(courseNumber - 1);
+            System.out.println("Где вы хотите создать новый модуль?");
+            System.out.println("1. Внутри темы");
+            System.out.println("2. Внутри модуля");
+            System.out.print("Выберите опцию: ");
+            int choice = readIntInput();
+
+            switch (choice) {
+                case 1: {
+                    course.writeTopics();
+                    System.out.print("Введите номер темы, внутри которой будет создан модуль: ");
+                    int topicNumber = readIntInput();
+                    if (topicNumber < 1 || topicNumber > course.getTopics().size()) {
+                        System.out.println("Ошибка, вы ввели неверный номер!");
+                        return;
+                    }
+                    else {
+                        CRUDModule.createModuleInCourse(course.getTopics().get(topicNumber - 1).getName(), course);
+                    }
+                    break;
+                }
+                case 2: {
+                    course.writeModules(course);
+                    System.out.print("Введите номер модуля, внутри которого будет создан модуль: ");
+                    int choiceForCreateModule = readIntInput();
+
+                    if (choiceForCreateModule < 1 || choiceForCreateModule > course.getModules().size()) {
+                        System.out.println("Ошибка, вы ввели неверный номер!");
+                        return;
+                    }
+                    else {
+                        CourseModule module = course.getModules().get(choiceForCreateModule - 1);
+
+                        System.out.print("Введите название нового модуля: ");
+                        String name = scanner.nextLine();
+                        CourseModule newModule = new CourseModule(module.getName(), name, course);
+                        newModule.setParent(module);
+                        CourseModule originalModule = module;
+                        module.addChildren(newModule);
+                        for (int i = 0; i < course.getTopics().size(); ++i) {
+                            Topic topic = course.getTopics().get(i);
+                            if (topic instanceof CourseModule) {
+                                CourseModule tempModule = (CourseModule) topic;
+                                if (tempModule == originalModule) {
+                                    course.replaceTopic(i, module);
+                                    break;
+                                }
+                            }
+                        }
+                        course.addModule(newModule);
+                        System.out.println("Модуль добавлен!");
+                    }
+                    break;
+                }
+                default: {
+                    System.out.println("Ошибка, неверная команда!");
+                }
+            }
+        }
+    }
+
+    public static void retrieveModule() {
+        if (CoursesStorage.getCourses().isEmpty()) {
+            System.out.println("Список классов пуст, сперва создайте класс!");
+            return;
+        }
+
+        int modulesNumber = 0;
+        for (int i = 0; i < CoursesStorage.getCourses().size(); ++i) {
+            for (int j = 0; j < CoursesStorage.getCourses().get(i).getModules().size(); ++j) {
+                System.out.println("Модуль " + (modulesNumber + 1) + ": " + CoursesStorage.getCourses().get(i).getModules().get(j).getModuleName());
+                modulesNumber++;
+            }
+        }
+        System.out.print("Введите номер модуля, который хотите достать: ");
+        int retrieveModule = readIntInput();
+
+        if (retrieveModule < 1 || retrieveModule > modulesNumber) {
+            System.out.println("Ошибка, вы ввели неверный номер!");
+            return;
+        }
+        else {
+            int temp = 0;
+            for (int i = 0; i < CoursesStorage.getCourses().size(); ++i) {
+                for (int j = 0; j < CoursesStorage.getCourses().get(i).getModules().size(); ++j) {
+                    System.out.println(CoursesStorage.getCourses().get(i).getModules().get(j).getModuleName());
+                    temp++;
+                    if (retrieveModule == temp) {
+                        System.out.println("Информация о модуле: ");
+                        System.out.println("Родительская тема: " + CoursesStorage.getCourses().get(i).getModules().get(j).getName());
+                        System.out.println("Название модуля: " + CoursesStorage.getCourses().get(i).getModules().get(j).getModuleName());
+                        System.out.println("Родитель: " + CoursesStorage.getCourses().get(i).getModules().get(j).getParent().getModuleName());
+                        if (!CoursesStorage.getCourses().get(i).getModules().get(j).getChildren().isEmpty()) {
+                            for (int k = 0; k < CoursesStorage.getCourses().get(i).getModules().get(j).getChildren().size(); ++k) {
+                                System.out.println("Потомок " + (k + 1) + ": " + CoursesStorage.getCourses().get(i).getModules().get(j).getChildren().get(k).getModuleName());
+                            }
+                        }
+                        else {
+                            System.out.println("Список потомков пуст!");
+                        }
+                        break;
+                    }
+                }
+            }
+        }
+    }
+
+    public static void updateModule() {
+
+    }
+
+    public static void deleteModule() {
+
+    }
+
+    public static void createModuleInCourse(String topicName, Course course) {
         Scanner scanner = new Scanner(System.in);
 
         String moduleName;

@@ -4,6 +4,7 @@ import java.util.Scanner;
 import Course.CoursesMenu;
 import ProgrammingLanguage.ProgrammingLanguagesMenu;
 import AlgorithmicTask.AlgorithmicTasksMenu;
+import CourseModule.ModulesMenu;
 
 import static ProgramSystem.Utils.readIntInput;
 
@@ -18,6 +19,10 @@ public class Console {
             switch (choice) {
                 case 1: {
                     CoursesMenu.coursesMenu();
+                    break;
+                }
+                case 3: {
+                    ModulesMenu.modulesMenu();
                     break;
                 }
                 case 6: {

@@ -31,7 +31,7 @@ public class CoursesStorage {
                 case 1: {
                     for (int i = 0; i < courses.size(); ++i) {
                         System.out.println("{");
-                        System.out.println("Название класса " + (i + 1) + ": " + courses.get(i).getName());
+                        System.out.println("Класс " + (i + 1) + ": " + courses.get(i).getName());
                         System.out.println("}");
                     }
                     break;
