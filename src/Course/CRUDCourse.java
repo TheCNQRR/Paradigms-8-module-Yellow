@@ -126,78 +126,81 @@ public class CRUDCourse {
 
     public static void updateTopics(Course course) {
         Scanner scanner = new Scanner(System.in);
+        System.out.println("Редактирование тем");
+        System.out.println("1. Добавить новую тему");
+        System.out.println("2. Удалить тему");
+        System.out.println("3. Редактировать тему");
+        System.out.print("Выберите опцию: ");
 
-        if (course.getTopicsNames().isEmpty()) {
-            System.out.println("Список тем пуст!");
-            return;
-        }
-        else {
-            System.out.println("Редактирование тем");
-            System.out.println("1. Добавить новую тему");
-            System.out.println("2. Удалить тему");
-            System.out.println("3. Редактировать тему");
-            System.out.print("Выберите опцию: ");
+        int choiceForTopic = readIntInput();
 
-            int choiceForTopic = readIntInput();
-
-            switch (choiceForTopic) {
-                case 1: {
-                    CRUDTopic.createTopic(course);
-                    break;
+        switch (choiceForTopic) {
+            case 1: {
+                CRUDTopic.createTopic(course);
+                break;
+            }
+            case 2: {
+                if (course.getTopicsNames().isEmpty()) {
+                    System.out.println("Список тем пуст!");
+                    return;
                 }
-                case 2: {
-                    course.writeTopics();
-                    System.out.print("Введите номер темы, которую хотите удалить: ");
-                    int deletingTopic = readIntInput();
 
-                    if (deletingTopic < 1 || deletingTopic > course.getTopics().size()) {
-                        System.out.println("Ошибка, вы ввели неверный номер!");
-                    }
-                    else {
-                        course.removeTopicAtIndex(deletingTopic - 1);
-                        course.removeTopicNameAtIndex(deletingTopic - 1);
-                        System.out.println("Тема удалена!");
-                    }
-                    break;
+                course.writeTopics();
+                System.out.print("Введите номер темы, которую хотите удалить: ");
+                int deletingTopic = readIntInput();
+
+                if (deletingTopic < 1 || deletingTopic > course.getTopics().size()) {
+                    System.out.println("Ошибка, вы ввели неверный номер!");
                 }
-                case 3: {
-                    course.writeTopics();
-                    System.out.print("Введите номер темы, которую хотите редактировать: ");
-                    int updatingTopic = readIntInput();
-                    if (updatingTopic < 1 || updatingTopic > course.getTopics().size()) {
-                        System.out.println("Ошибка, вы ввели неверный номер!");
-                    }
-                    else {
-                        course.writeTopicAtIndex(updatingTopic - 1);
-                        System.out.println("Что вы хотите изменить?");
-                        System.out.println("1. Название");
-                        System.out.println("2. Видимость");
-                        System.out.print("Выберите опцию: ");
-                        int choice = readIntInput();
+                else {
+                    course.removeTopicAtIndex(deletingTopic - 1);
+                    course.removeTopicNameAtIndex(deletingTopic - 1);
+                    System.out.println("Тема удалена!");
+                }
+                break;
+            }
+            case 3: {
+                if (course.getTopicsNames().isEmpty()) {
+                    System.out.println("Список тем пуст!");
+                    return;
+                }
 
-                        switch (choice) {
-                            case 1: {
-                                System.out.print("Введите новое название темы: ");
-                                String newName = scanner.nextLine();
-                                Topic topic = course.getTopics().get(updatingTopic - 1);
-                                topic.setName(newName);
-                                course.replaceTopic(updatingTopic - 1, topic);
-                                course.replaceTopicName(updatingTopic - 1, newName);
-                                System.out.println("Название темы изменено!");
-                                break;
-                            }
-                            case 2: {
-                                course.setTopicVisibility(course.getTopics().get(updatingTopic - 1).getName(), !course.isTopicVisible(course.getTopics().get(updatingTopic - 1).getName()));
-                                System.out.println("Видимость изменена!");
-                                break;
-                            }
+                course.writeTopics();
+                System.out.print("Введите номер темы, которую хотите редактировать: ");
+                int updatingTopic = readIntInput();
+                if (updatingTopic < 1 || updatingTopic > course.getTopics().size()) {
+                    System.out.println("Ошибка, вы ввели неверный номер!");
+                }
+                else {
+                    course.writeTopicAtIndex(updatingTopic - 1);
+                    System.out.println("Что вы хотите изменить?");
+                    System.out.println("1. Название");
+                    System.out.println("2. Видимость");
+                    System.out.print("Выберите опцию: ");
+                    int choice = readIntInput();
+
+                    switch (choice) {
+                        case 1: {
+                            System.out.print("Введите новое название темы: ");
+                            String newName = scanner.nextLine();
+                            Topic topic = course.getTopics().get(updatingTopic - 1);
+                            topic.setName(newName);
+                            course.replaceTopic(updatingTopic - 1, topic);
+                            course.replaceTopicName(updatingTopic - 1, newName);
+                            System.out.println("Название темы изменено!");
+                            break;
+                        }
+                        case 2: {
+                            course.setTopicVisibility(course.getTopics().get(updatingTopic - 1).getName(), !course.isTopicVisible(course.getTopics().get(updatingTopic - 1).getName()));
+                            System.out.println("Видимость изменена!");
+                            break;
                         }
                     }
-                    break;
                 }
-                default: {
-                    System.out.println("Ошибка, неверная команда!");
-                }
+                break;
+            }
+            default: {
+                System.out.println("Ошибка, неверная команда!");
             }
         }
     }

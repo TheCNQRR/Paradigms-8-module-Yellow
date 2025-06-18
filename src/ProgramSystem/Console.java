@@ -5,6 +5,7 @@ import Course.CoursesMenu;
 import ProgrammingLanguage.ProgrammingLanguagesMenu;
 import AlgorithmicTask.AlgorithmicTasksMenu;
 import CourseModule.ModulesMenu;
+import Section.SectionMenu;
 
 import static ProgramSystem.Utils.readIntInput;
 
@@ -23,6 +24,10 @@ public class Console {
                 }
                 case 3: {
                     ModulesMenu.modulesMenu();
+                    break;
+                }
+                case 4: {
+                    SectionMenu.sectionsMenu();
                     break;
                 }
                 case 6: {

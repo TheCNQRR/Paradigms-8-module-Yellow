@@ -36,6 +36,11 @@ public class CRUDModule {
 
             switch (choice) {
                 case 1: {
+                    if (course.getTopicsNames().isEmpty()) {
+                        System.out.println("Список тем пуст, сперва создайте тему!");
+                        return;
+                    }
+
                     course.writeTopics();
                     System.out.print("Введите номер темы, внутри которой будет создан модуль: ");
                     int topicNumber = readIntInput();
@@ -49,6 +54,11 @@ public class CRUDModule {
                     break;
                 }
                 case 2: {
+                    if (course.getModules().isEmpty()) {
+                        System.out.println("Список модулей пуст, сперва создайте модуль!");
+                        return;
+                    }
+
                     course.writeModules(course);
                     System.out.print("Введите номер модуля, внутри которого будет создан модуль: ");
                     int choiceForCreateModule = readIntInput();
@@ -151,8 +161,13 @@ public class CRUDModule {
         }
         else {
             Course course = CoursesStorage.getCourses().get(updatingCourse - 1);
+            if (course.getModules().isEmpty()) {
+                System.out.println("Список модулей пуст!");
+                return;
+            }
+
             course.writeModules(course);
-            System.out.print("Введите номер модуля, который хотите редактировать: ");
+            System.out.print("Введите номер модуля, который вы хотите редактировать: ");
             int updatingModule = readIntInput();
             if (updatingModule < 1 || updatingModule > course.getModules().size()) {
                 System.out.println("Ошибка, вы ввели неверный номер!");
@@ -193,6 +208,11 @@ public class CRUDModule {
         }
         else {
             Course course = CoursesStorage.getCourses().get(updatingCourse - 1);
+            if (course.getModules().isEmpty()) {
+                System.out.println("Список модулей пуст!");
+                return;
+            }
+
             course.writeModules(course);
             System.out.print("Введите номер модуля, который хотите удалить: ");
             int deletingModule = readIntInput();

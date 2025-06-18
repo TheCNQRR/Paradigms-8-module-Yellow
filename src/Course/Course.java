@@ -69,6 +69,16 @@ public class Course {
         modules.remove(module);
     }
 
+    private final ArrayList<Section> sections = new ArrayList<>();
+    public ArrayList<Section> getSections() { return new ArrayList<>(sections); }
+    public void addSection(Section section) { sections.add(section); }
+    public void replaceSection(int index, Section section) { sections.set(index, section); }
+    public void writeSections(Course course) {
+        for (int i = 0; i < course.sections.size(); ++i) {
+            System.out.println("Секция " + (i + 1) + ": " + course.sections.get(i).getSectionName());
+        }
+    }
+
     public void setTopicVisibility(String topicName, boolean isVisible) {
         if (topicsVisibility.containsKey(topicName)) {
             topicsVisibility.put(topicName, isVisible);
@@ -97,8 +107,8 @@ public class Course {
         return module;
     }
 
-    public Section createSection(String name) {
-        Section section = new Section(name, this);
+    public Section createSection(String topicName, String name) {
+        Section section = new Section(topicName, name, this);
         topics.add(section);
         return section;
     }
@@ -145,6 +155,34 @@ public class Course {
 
             if (!child.getChildren().isEmpty()) {
                 printNestedModules(child, depth + 1, isParentVisible);
+            }
+        }
+    }
+
+    public void writeSectionsInCourse(Course course) {
+        if (course.topicsNames.isEmpty()) {
+            System.out.println("Список тем пуст!");
+            return;
+        }
+
+        for (int i = 0; i < topicsNames.size(); ++i) {
+            String topicName = topicsNames.get(i);
+            boolean isTopicVisible = isTopicVisible(topicName);
+            String topicStatus = isTopicVisible ? "" : " [Скрыта]";
+
+            System.out.println("|-Тема " + (i + 1) + ": " + topicName + topicStatus);
+            int sectionCounter = 1;
+
+            for (Topic topic : topics) {
+                if (topic instanceof Section) {
+                    Section section = (Section) topic;
+                    if (section.getName().equals(topicName)) {
+                        String sectionStatus = isTopicVisible ? "" : " [Скрыта]";
+                        System.out.println("|--Секция " + sectionCounter + ": " +
+                                section.getSectionName() + sectionStatus);
+                        sectionCounter++;
+                    }
+                }
             }
         }
     }
