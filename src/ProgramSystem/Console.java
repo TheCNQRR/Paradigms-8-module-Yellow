@@ -6,6 +6,8 @@ import ProgrammingLanguage.ProgrammingLanguagesMenu;
 import AlgorithmicTask.AlgorithmicTasksMenu;
 import CourseModule.ModulesMenu;
 import Section.SectionMenu;
+import Topic.Topic;
+import Topic.TopicMenu;
 
 import static ProgramSystem.Utils.readIntInput;
 
@@ -20,6 +22,10 @@ public class Console {
             switch (choice) {
                 case 1: {
                     CoursesMenu.coursesMenu();
+                    break;
+                }
+                case 2: {
+                    TopicMenu.topicMenu();
                     break;
                 }
                 case 3: {

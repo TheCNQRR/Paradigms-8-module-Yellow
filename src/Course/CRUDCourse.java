@@ -31,7 +31,7 @@ public class CRUDCourse {
 
         switch (choiceForTopic) {
             case 1: {
-                CRUDTopic.createTopic(course);
+                CRUDTopic.createTopicInCourse(course);
                 break;
             }
             case 2: {
@@ -143,7 +143,7 @@ public class CRUDCourse {
 
         switch (choiceForTopic) {
             case 1: {
-                CRUDTopic.createTopic(course);
+                CRUDTopic.createTopicInCourse(course);
                 break;
             }
             case 2: {

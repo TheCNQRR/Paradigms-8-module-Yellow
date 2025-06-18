@@ -145,7 +145,7 @@ public class Course {
         }
     }
 
-    private void printNestedModules(CourseModule parentModule, int depth, boolean isParentVisible) {
+    public void printNestedModules(CourseModule parentModule, int depth, boolean isParentVisible) {
         int childCounter = 1;
         for (CourseModule child : parentModule.getChildren()) {
             String status = isParentVisible ? "" : " [Скрыт]";
