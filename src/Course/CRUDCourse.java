@@ -169,13 +169,29 @@ public class CRUDCourse {
                     }
                     else {
                         course.writeTopicAtIndex(updatingTopic - 1);
-                        System.out.print("Введите новое название темы: ");
-                        String newName = scanner.nextLine();
-                        Topic topic = course.getTopics().get(updatingTopic - 1);
-                        topic.setName(newName);
-                        course.replaceTopic(updatingTopic - 1, topic);
-                        course.replaceTopicName(updatingTopic - 1, newName);
-                        System.out.println("Название темы изменено!");
+                        System.out.println("Что вы хотите изменить?");
+                        System.out.println("1. Название");
+                        System.out.println("2. Видимость");
+                        System.out.print("Выберите опцию: ");
+                        int choice = readIntInput();
+
+                        switch (choice) {
+                            case 1: {
+                                System.out.print("Введите новое название темы: ");
+                                String newName = scanner.nextLine();
+                                Topic topic = course.getTopics().get(updatingTopic - 1);
+                                topic.setName(newName);
+                                course.replaceTopic(updatingTopic - 1, topic);
+                                course.replaceTopicName(updatingTopic - 1, newName);
+                                System.out.println("Название темы изменено!");
+                                break;
+                            }
+                            case 2: {
+                                course.setTopicVisibility(course.getTopics().get(updatingTopic - 1).getName(), !course.isTopicVisible(course.getTopics().get(updatingTopic - 1).getName()));
+                                System.out.println("Видимость изменена!");
+                                break;
+                            }
+                        }
                     }
                     break;
                 }
