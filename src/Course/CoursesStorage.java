@@ -40,7 +40,7 @@ public class CoursesStorage {
                     for (int i = 0; i < courses.size(); ++i) {
                         System.out.println("{");
                         System.out.println("|Класс " + (i + 1) + ": " + courses.get(i).getName());
-                        courses.get(i).writeModulesInCourse(courses.get(i));
+                        courses.get(i).writeModulesAndSectionsInCourse(courses.get(i));
                         System.out.println("}");
                     }
                     break;

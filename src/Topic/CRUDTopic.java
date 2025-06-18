@@ -2,6 +2,7 @@ package Topic;
 
 import Course.Course;
 import CourseModule.CRUDModule;
+import Section.CRUDSection;
 
 import java.util.Scanner;
 
@@ -72,7 +73,7 @@ public class CRUDTopic {
                 break;
             }
             case 2: {
-
+                CRUDSection.createSectionInCourse(topicName, course);
                 break;
             }
             default: {

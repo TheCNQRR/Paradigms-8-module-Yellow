@@ -186,4 +186,50 @@ public class Course {
             }
         }
     }
+
+    public void writeModulesAndSectionsInCourse(Course course) {
+        if (course.topicsNames.isEmpty()) {
+            System.out.println("Список тем пуст!");
+            return;
+        }
+
+
+        for (int i = 0; i < topicsNames.size(); ++i) {
+            String topicName = topicsNames.get(i);
+            boolean isTopicVisible = isTopicVisible(topicName);
+            String topicStatus = isTopicVisible ? "" : " [Скрыта]";
+
+            System.out.println("|-Тема " + (i + 1) + ": " + topicName + topicStatus);
+
+            int moduleCounter = 1;
+            for (Topic topic : topics) {
+                if (topic instanceof CourseModule) {
+                    CourseModule module = (CourseModule) topic;
+                    if (module.getName().equals(topicName)) {
+                        String moduleStatus = isTopicVisible ? "" : " [Скрыт]";
+                        System.out.println("|--Модуль " + moduleCounter + ": " +
+                                module.getModuleName() + moduleStatus);
+                        moduleCounter++;
+
+                        if (!module.getChildren().isEmpty()) {
+                            printNestedModules(module, 3, isTopicVisible);
+                        }
+                    }
+                }
+            }
+
+            int sectionCounter = 1;
+            for (Topic topic : topics) {
+                if (topic instanceof Section) {
+                    Section section = (Section) topic;
+                    if (section.getName().equals(topicName)) {
+                        String sectionStatus = isTopicVisible ? "" : " [Скрыта]";
+                        System.out.println("|--Секция " + sectionCounter + ": " +
+                                section.getSectionName() + sectionStatus);
+                        sectionCounter++;
+                    }
+                }
+            }
+        }
+    }
 }

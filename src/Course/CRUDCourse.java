@@ -4,6 +4,8 @@ import java.util.Scanner;
 
 import CourseModule.CRUDModule;
 import CourseModule.CourseModule;
+import Section.CRUDSection;
+import Section.Section;
 import Topic.CRUDTopic;
 import Topic.Topic;
 
@@ -63,7 +65,7 @@ public class CRUDCourse {
         }
         else {
             System.out.println("|Класс :" + CoursesStorage.getCourses().get(retrieveCourse - 1).getName());
-            CoursesStorage.getCourses().get(retrieveCourse - 1).writeModulesInCourse(CoursesStorage.getCourses().get(retrieveCourse - 1));
+            CoursesStorage.getCourses().get(retrieveCourse - 1).writeModulesAndSectionsInCourse(CoursesStorage.getCourses().get(retrieveCourse - 1));
         }
     }
 
@@ -80,6 +82,7 @@ public class CRUDCourse {
             System.out.println("Ошибка, вы ввели неверный номер!");
             return;
         }
+
         else {
             Course course = CoursesStorage.getCourses().get(choice - 1);
             System.out.println("Что вы хотите изменить?");
@@ -96,6 +99,10 @@ public class CRUDCourse {
                 }
                 case 2: {
                     updateModules(course);
+                    break;
+                }
+                case 3: {
+                    updateSections(course);
                     break;
                 }
                 default: {
@@ -235,19 +242,29 @@ public class CRUDCourse {
                         int choiceForCreate = readIntInput();
                         switch (choiceForCreate) {
                             case 1: {
+                                if (course.getTopicsNames().isEmpty()) {
+                                    System.out.println("Список тем пуст, сперва создайте тему!");
+                                    return;
+                                }
+
                                 course.writeTopics();
                                 System.out.print("Введите номер темы, внутри которой будет создан модуль: ");
-                                int updatingModule = readIntInput();
-                                if (updatingModule < 1 || updatingModule > course.getTopics().size()) {
+                                int topicNumber = readIntInput();
+                                if (topicNumber < 1 || topicNumber > course.getTopics().size()) {
                                     System.out.println("Ошибка, вы ввели неверный номер!");
                                     return;
                                 }
                                 else {
-                                    CRUDModule.createModuleInCourse(course.getTopics().get(updatingModule - 1).getName(), course);
+                                    CRUDModule.createModuleInCourse(course.getTopics().get(topicNumber - 1).getName(), course);
                                 }
                                 break;
                             }
                             case 2: {
+                                if (course.getModules().isEmpty()) {
+                                    System.out.println("Список модулей пуст, сперва создайте модуль!");
+                                    return;
+                                }
+
                                 course.writeModules(course);
                                 System.out.print("Введите номер модуля, внутри которого будет создан модуль: ");
                                 int choiceForCreateModule = readIntInput();
@@ -263,13 +280,14 @@ public class CRUDCourse {
                                     String name = scanner.nextLine();
                                     CourseModule newModule = new CourseModule(module.getName(), name, course);
                                     newModule.setParent(module);
+                                    CourseModule originalModule = module;
                                     module.addChildren(newModule);
                                     for (int i = 0; i < course.getTopics().size(); ++i) {
                                         Topic topic = course.getTopics().get(i);
                                         if (topic instanceof CourseModule) {
                                             CourseModule tempModule = (CourseModule) topic;
-                                            if (tempModule.getModuleName().equals(module.getModuleName())) {
-                                                course.replaceTopic(i, tempModule);
+                                            if (tempModule == originalModule) {
+                                                course.replaceTopic(i, module);
                                                 break;
                                             }
                                         }
@@ -312,7 +330,7 @@ public class CRUDCourse {
                 }
                 case 3: {
                     course.writeModules(course);
-                    System.out.print("Введите номер модуля, который хотите редактировать: ");
+                    System.out.print("Введите номер модуля, который вы хотите редактировать: ");
                     int updatingModule = readIntInput();
                     if (updatingModule < 1 || updatingModule > course.getModules().size()) {
                         System.out.println("Ошибка, вы ввели неверный номер!");
@@ -338,6 +356,104 @@ public class CRUDCourse {
                         }
 
                         System.out.println("Название модуля изменено!");
+                    }
+                    break;
+                }
+                default: {
+                    System.out.println("Ошибка, неверная команда!");
+                }
+            }
+        }
+    }
+
+    public static void updateSections(Course course) {
+        Scanner scanner = new Scanner(System.in);
+
+        if (course.getTopicsNames().isEmpty()) {
+            System.out.println("Список тем пуст, сперва создайте тему!");
+            return;
+        }
+        else {
+            System.out.println("Редактирование секций");
+            System.out.println("1. Добавить новую секцию");
+            System.out.println("2. Удалить секцию");
+            System.out.println("3. Редактировать секцию");
+            System.out.print("Выберите опцию: ");
+
+            int choiceForSection = readIntInput();
+
+            switch (choiceForSection) {
+                case 1: {
+                    if (course.getTopicsNames().isEmpty()) {
+                        System.out.println("Список тем пуст, сперва создайте тему!");
+                        return;
+                    }
+                    course.writeTopics();
+                    System.out.print("Введите номер темы, внутри которой будет создана секция: ");
+                    int topicNumber = readIntInput();
+
+                    if (topicNumber < 1 || topicNumber > course.getTopics().size()) {
+                        System.out.println("Ошибка, вы ввели неверный номер!");
+                        return;
+                    }
+                    else {
+                        CRUDSection.createSectionInCourse(course.getTopics().get(topicNumber - 1).getName(), course);
+                    }
+
+                    break;
+                }
+                case 2: {
+                    course.writeSections(course);
+                    System.out.print("Введите номер секции, которую хотите удалить: ");
+                    int deletingSection = readIntInput();
+                    if (deletingSection < 1 || deletingSection > course.getModules().size()) {
+                        System.out.println("Ошибка, вы ввели неверный номер!");
+                    }
+                    else {
+                        Section section = course.getSections().get(deletingSection - 1);
+                        for (int i = 0; i < course.getTopics().size(); ++i) {
+                            Topic topic = course.getTopics().get(i);
+                            if (topic instanceof Section) {
+                                Section tempSection = (Section) topic;
+                                if (tempSection == section) {
+                                    course.removeTopicAtIndex(i);
+                                    break;
+                                }
+                            }
+                        }
+                        course.removeModuleAtIndex(deletingSection - 1);
+                        System.out.println("Секция удалена!");
+                    }
+                    break;
+                }
+                case 3: {
+                    course.writeSections(course);
+                    System.out.print("Введите номер секции, которую вы хотите редактировать: ");
+                    int updatingSection = readIntInput();
+                    if (updatingSection < 1 || updatingSection > course.getSections().size()) {
+                        System.out.println("Ошибка, вы ввели неверный номер!");
+                    }
+                    else {
+                        System.out.print("Введите новое название секции: ");
+                        String newName = scanner.nextLine();
+                        Section section = course.getSections().get(updatingSection - 1);
+
+                        Section originalSection = section;
+                        originalSection.setSectionName(newName);
+                        course.replaceSection(updatingSection - 1, originalSection);
+
+                        for (int i = 0; i < course.getTopics().size(); ++i) {
+                            Topic topic = course.getTopics().get(i);
+                            if (topic instanceof Section) {
+                                Section temp = (Section) topic;
+                                if (temp == originalSection) {
+                                    temp.setSectionName(newName);
+                                    course.replaceTopic(i, temp);
+                                }
+                            }
+                        }
+
+                        System.out.println("Название секции изменено!");
                     }
                     break;
                 }
