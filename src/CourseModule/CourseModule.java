@@ -28,6 +28,14 @@ public class CourseModule extends Topic {
     public void addChildren(CourseModule children) { this.children.add(children); }
     public void removeChildrenAtIndex(int index) { children.remove(index); }
 
+    public void setVisibilityRecursive(boolean visibility) {
+        this.setVisibility(visibility);
+
+        for (CourseModule child : getChildren()) {
+            child.setVisibilityRecursive(visibility);
+        }
+    }
+
     @Override
     public String getName() { return name; }
 

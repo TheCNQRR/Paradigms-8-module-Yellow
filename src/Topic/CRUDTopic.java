@@ -16,6 +16,38 @@ public class CRUDTopic {
         topicName = scanner.nextLine();
         course.addTopicName(topicName);
 
+        System.out.println("Установите видимость темы:");
+        System.out.println("1. Видна");
+        System.out.println("2. Скрыта");
+        System.out.print("Выберите опцию: ");
+
+        int choiceVisibility = readIntInput();
+        boolean isSetVisibility = false;
+
+        while (!isSetVisibility) {
+            if (choiceVisibility != 1 && choiceVisibility != 2) {
+                System.out.print("Ошибка, вы ввели неверное число! Повторите попытку: ");
+                choiceVisibility = readIntInput();
+            }
+            else {
+                isSetVisibility = true;
+            }
+        }
+
+        switch (choiceVisibility) {
+            case 1: {
+                course.setTopicVisibility(topicName, true);
+                break;
+            }
+            case 2: {
+                course.setTopicVisibility(topicName, false);
+                break;
+            }
+            default: {
+                System.out.println("Ошибка, неверная команда!");
+            }
+        }
+
         System.out.println("Добавление модуля/секции в тему");
         System.out.println("1. Создать модуль");
         System.out.println("2. Создать секцию");
@@ -47,7 +79,6 @@ public class CRUDTopic {
                 System.out.println("Ошибка, неверная команда!");
             }
         }
-        //TODO добавление задания в тему (опционально)
         System.out.println("Тема создана!");
     }
 }

@@ -5,12 +5,15 @@ import Topic.Topic;
 import CourseModule.CourseModule;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.SplittableRandom;
 
 public class Course {
     private String name;
     public String getName() { return name; }
     public void setName(String name) { this.name = name; }
+
+    private final HashMap<String, Boolean> topicsVisibility = new HashMap<>();
 
     private ArrayList<Topic> topics = new ArrayList<>();
     public ArrayList<Topic> getTopics() { return new ArrayList<>(topics); }
@@ -30,13 +33,17 @@ public class Course {
         }
         else {
             for (int i = 0; i < topicsNames.size(); ++i) {
-                System.out.println("Тема " + (i + 1) + ": " + topicsNames.get(i));
+                String status = isTopicVisible(topicsNames.get(i)) ? "" : " [Скрыта]";
+                System.out.println("Тема " + (i + 1) + ": " + topicsNames.get(i) + status);
             }
         }
     }
 
     private final ArrayList<String> topicsNames = new ArrayList<>();
-    public void addTopicName(String name) { topicsNames.add(name); }
+    public void addTopicName(String name) {
+        topicsNames.add(name);
+        topicsVisibility.put(name, true);
+    }
     public void removeTopicNameAtIndex(int index) { topicsNames.remove(index); }
     public ArrayList<String> getTopicsNames() { return new ArrayList<>(topicsNames); }
     public void replaceTopicName(int index, String name) { topicsNames.set(index, name); }
@@ -62,6 +69,25 @@ public class Course {
         modules.remove(module);
     }
 
+    public void setTopicVisibility(String topicName, boolean isVisible) {
+        if (topicsVisibility.containsKey(topicName)) {
+            topicsVisibility.put(topicName, isVisible);
+
+            for (Topic item : topics) {
+                if (item.getName().equals(topicName)) {
+                    item.setVisibility(isVisible);
+
+                    if (item instanceof CourseModule) {
+                        ((CourseModule) item).setVisibilityRecursive(isVisible);
+                    }
+                }
+            }
+        }
+    }
+
+    public boolean isTopicVisible(String topicName) {
+        return topicsVisibility.getOrDefault(topicName, true);
+    }
 
     public Course(String name) { this.name = name; }
 
@@ -84,18 +110,24 @@ public class Course {
         }
 
         for (int i = 0; i < topicsNames.size(); ++i) {
-            System.out.println("|-Тема " + (i + 1) + ": " + topicsNames.get(i));
+            String topicName = topicsNames.get(i);
+            boolean isTopicVisible = isTopicVisible(topicName);
+            String topicStatus = isTopicVisible ? "" : " [Скрыта]";
+
+            System.out.println("|-Тема " + (i + 1) + ": " + topicName + topicStatus);
             int moduleCounter = 1;
 
             for (Topic topic : topics) {
                 if (topic instanceof CourseModule) {
                     CourseModule module = (CourseModule) topic;
-                    if (module.getName().equals(topicsNames.get(i))) {
-                        System.out.println("|--Модуль " + moduleCounter + ": " + module.getModuleName());
+                    if (module.getName().equals(topicName)) {
+                        String moduleStatus = isTopicVisible ? "" : " [Скрыт]";
+                        System.out.println("|--Модуль " + moduleCounter + ": " +
+                                module.getModuleName() + moduleStatus);
                         moduleCounter++;
 
                         if (!module.getChildren().isEmpty()) {
-                            printNestedModules(module, 3);
+                            printNestedModules(module, 3, isTopicVisible);
                         }
                     }
                 }
@@ -103,14 +135,16 @@ public class Course {
         }
     }
 
-    private void printNestedModules(CourseModule parentModule, int depth) {
+    private void printNestedModules(CourseModule parentModule, int depth, boolean isParentVisible) {
         int childCounter = 1;
         for (CourseModule child : parentModule.getChildren()) {
-            System.out.println("|" + "-".repeat(depth) + "Модуль " + childCounter + ": " + child.getModuleName());
+            String status = isParentVisible ? "" : " [Скрыт]";
+            System.out.println("|" + "-".repeat(depth) + "Модуль " + childCounter + ": " +
+                    child.getModuleName() + status);
             childCounter++;
 
             if (!child.getChildren().isEmpty()) {
-                printNestedModules(child, depth + 1);
+                printNestedModules(child, depth + 1, isParentVisible);
             }
         }
     }
