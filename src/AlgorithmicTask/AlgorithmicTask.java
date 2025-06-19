@@ -6,9 +6,6 @@ import Task.Task;
 import java.util.ArrayList;
 
 public class AlgorithmicTask extends Task {
-    public String getName() { return name; }
-    public void setName(String name) { this.name = name; }
-
     private final ArrayList<ProgrammingLanguage> programmingLanguages = new ArrayList<>();
     public void addProgrammingLanguage(ProgrammingLanguage programmingLanguage) { this.programmingLanguages.add(programmingLanguage); }
     public ArrayList<ProgrammingLanguage> getProgrammingLanguage() { return new ArrayList<>(programmingLanguages); }
@@ -19,7 +16,7 @@ public class AlgorithmicTask extends Task {
         }
         else {
             for (int i = 0; i < programmingLanguages.size(); ++i) {
-                System.out.println("Язык " + (i + 1) + programmingLanguages.get(i).getName());
+                System.out.println("Язык " + (i + 1) + ": " + programmingLanguages.get(i).getName());
             }
         }
     }

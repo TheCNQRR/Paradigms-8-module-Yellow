@@ -1,6 +1,10 @@
 package CourseModule;
 
+import AlgorithmicTask.AlgorithmicTask;
 import Course.Course;
+import Survey.Survey;
+import Task.Task;
+import TaskWithRepository.TaskWithRepository;
 import Topic.Topic;
 
 import java.util.ArrayList;
@@ -33,6 +37,30 @@ public class CourseModule extends Topic {
 
         for (CourseModule child : getChildren()) {
             child.setVisibilityRecursive(visibility);
+        }
+    }
+
+    public void addTask(Task task) { tasks.add(task); }
+    public void removeTaskAtIndex(int index) { tasks.remove(index); }
+    public void removeTaskObject(Task task) { tasks.remove(task); }
+    public ArrayList<Task> getTasks() { return new ArrayList<>(tasks); }
+    //TODO опрос
+    public void writeAllTasks() {
+        for (int i = 0; i < tasks.size(); ++i) {
+            Task task = tasks.get(i);
+            String type = "";
+            if (task instanceof AlgorithmicTask) { type = "задание по алгоритмике"; }
+            else if (task instanceof TaskWithRepository) { type = "задание с репозиторием"; }
+            else if (task instanceof Survey) { type = "опрос"; }
+
+            System.out.println("{");
+            System.out.println("Задание " + (i + 1) + ": " + task.getName() + " [" + type + "]");
+            System.out.println("Текст задания: " + task.getTaskText());
+            System.out.println("Пример: " + task.getTaskExample());
+            if (task.getSolution() != null) { System.out.println("Решение: " + task.getSolution().getSolutionText()); }
+            if (task instanceof AlgorithmicTask) { ((AlgorithmicTask) task).writeLanguagesInTask(); }
+            if (task instanceof TaskWithRepository) { System.out.println("Ссылка на репозиторий: " + ((TaskWithRepository) task).getRepositoryReference()); }
+            System.out.println("}");
         }
     }
 

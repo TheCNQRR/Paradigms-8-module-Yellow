@@ -3,8 +3,6 @@ package TaskWithRepository;
 import Task.Task;
 
 public class TaskWithRepository extends Task {
-    public String getName() { return name; }
-    public void setName(String name) { this.name = name; }
 
     private String repositoryReference;
     public void setRepositoryReference(String repositoryReference) { this.repositoryReference = repositoryReference; }

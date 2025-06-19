@@ -142,6 +142,13 @@ public class CRUDModule {
                         else {
                             System.out.println("Список потомков пуст!");
                         }
+                        if (CoursesStorage.getCourses().get(i).getModules().get(j).getTasks().isEmpty()) {
+                            System.out.println("Список задание пуст");
+                        }
+                        else {
+                            System.out.println("Список заданий: ");
+                            CoursesStorage.getCourses().get(i).getModules().get(j).writeAllTasks();
+                        }
                         break;
                     }
                 }

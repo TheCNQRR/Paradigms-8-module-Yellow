@@ -1,6 +1,9 @@
 package Topic;
 
 import Course.Course;
+import Task.Task;
+
+import java.util.ArrayList;
 
 public abstract class Topic {
     protected String name;
@@ -20,4 +23,6 @@ public abstract class Topic {
     private boolean visibility;
     public boolean isVisible() { return visibility; }
     public void setVisibility(boolean visibility) { this.visibility = visibility; }
+
+    protected final ArrayList<Task> tasks = new ArrayList<>();
 }

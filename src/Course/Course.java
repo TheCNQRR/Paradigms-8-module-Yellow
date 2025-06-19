@@ -1,6 +1,7 @@
 package Course;
 
 import Section.Section;
+import Task.Task;
 import Topic.Topic;
 import CourseModule.CourseModule;
 
@@ -231,5 +232,27 @@ public class Course {
                 }
             }
         }
+    }
+
+    public void writeModulesContainsTask(Task task) {
+        int counter = 1;
+        for (int i = 0; i < modules.size(); ++i) {
+            CourseModule module = modules.get(i);
+            if (module.getTasks().contains(task)) {
+                System.out.println("Модуль " + counter + ": " + module.getModuleName());
+                counter++;
+            }
+        }
+    }
+
+    public int getCountModulesContainsTask(Task task) {
+        int counter = 0;
+        for (int i = 0; i < modules.size(); ++i) {
+            CourseModule module = modules.get(i);
+            if (module.getTasks().contains(task)) {
+                counter++;
+            }
+        }
+        return counter;
     }
 }
