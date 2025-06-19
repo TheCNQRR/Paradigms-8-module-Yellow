@@ -10,6 +10,7 @@ import Section.SectionMenu;
 import Topic.TopicMenu;
 import TaskWithRepository.TaskWithRepositoryMenu;
 import Survey.SurveyMenu;
+import Solution.SolutionMenu;
 
 import static ProgramSystem.Utils.readIntInput;
 
@@ -44,6 +45,10 @@ public class Console {
                 }
                 case 6: {
                     TaskWithRepositoryMenu.tasksWithRepositoryMenu();
+                    break;
+                }
+                case 7: {
+                    SolutionMenu.solutionsMenu();
                     break;
                 }
                 case 8: {

@@ -133,8 +133,7 @@ public class Course {
                     CourseModule module = (CourseModule) topic;
                     if (module.getName().equals(topicName)) {
                         String moduleStatus = isTopicVisible ? "" : " [Скрыт]";
-                        System.out.println("|--Модуль " + moduleCounter + ": " +
-                                module.getModuleName() + moduleStatus);
+                        System.out.println("|--Модуль " + moduleCounter + ": " + module.getModuleName() + moduleStatus);
                         moduleCounter++;
 
                         if (!module.getChildren().isEmpty()) {

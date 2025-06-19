@@ -27,7 +27,7 @@ public class SurveyMenu {
                     break;
                 }
                 case 5: {
-                    SurveyStorage.writeAllSurvey();
+                    SurveyStorage.writeAllSurveyFull();
                     break;
                 }
                 case 0: {

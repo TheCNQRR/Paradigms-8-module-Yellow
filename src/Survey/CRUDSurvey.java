@@ -253,7 +253,7 @@ public class CRUDSurvey {
                 }
 
                 course.writeModules(course);
-                System.out.print("Выберите модуль, к которому будет прикреплён опрос");
+                System.out.print("Выберите модуль, к которому будет прикреплён опрос: ");
                 int moduleNumber = readIntInput();
 
                 if (moduleNumber < 1 || moduleNumber > course.getModules().size()) {
@@ -335,7 +335,7 @@ public class CRUDSurvey {
             return;
         }
 
-        SurveyStorage.writeAllSurvey();
+        SurveyStorage.writeAllSurveyFull();
 
         System.out.print("Введите номер опроса, который вы хотите удалить: ");
         int choice = readIntInput();

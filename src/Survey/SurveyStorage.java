@@ -11,7 +11,7 @@ public class SurveyStorage {
     public static void removeSurveyAtIndex(int index) { surveys.remove(index); }
     public static void removeSurveyObject(Survey survey) { surveys.remove(survey); }
     public static void replaceSurvey(int index, Survey survey) { surveys.set(index, survey); }
-    public static void writeAllSurvey() {
+    public static void writeAllSurveyFull() {
         if (surveys.isEmpty()) {
             System.out.println("Список опросов пуст!");
             return;
@@ -45,6 +45,17 @@ public class SurveyStorage {
                     System.out.println("}");
                 }
             }
+        }
+    }
+    public static void writeAllSurvey() {
+        if (surveys.isEmpty()) {
+            System.out.println("Список опросов пуст!");
+            return;
+        }
+
+        for (int i = 0; i < surveys.size(); ++i) {
+            Survey survey = surveys.get(i);
+            System.out.println("Название опроса: " + survey.getName());
         }
     }
 }

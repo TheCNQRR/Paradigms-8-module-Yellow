@@ -15,7 +15,7 @@ public class CRUDQuestion {
             return;
         }
 
-        SurveyStorage.writeAllSurvey();
+        SurveyStorage.writeAllSurveyFull();
         System.out.print("Введите номер опроса, в котором будет создан вопрос: ");
         int surveyNumber = readIntInput();
 

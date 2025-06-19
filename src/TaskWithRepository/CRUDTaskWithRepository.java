@@ -206,7 +206,7 @@ public class CRUDTaskWithRepository {
                 }
 
                 course.writeModules(course);
-                System.out.print("Выберите модуль, к которому будет прикреплено задание");
+                System.out.print("Выберите модуль, к которому будет прикреплено задание: ");
                 int moduleNumber = readIntInput();
 
                 if (moduleNumber < 1 || moduleNumber > course.getModules().size()) {
