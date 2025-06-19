@@ -27,7 +27,7 @@ public class AlgorithmicTasksMenu {
                     break;
                 }
                 case 5: {
-                    AlgorithmicTasksStorage.writeAllTasks();
+                    AlgorithmicTasksStorage.writeAllTasksFull();
                     break;
                 }
                 case 0: {

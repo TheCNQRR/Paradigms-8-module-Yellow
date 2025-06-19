@@ -290,7 +290,7 @@ public class CRUDQuestion {
         }
 
         for (int i = 0; i < QuestionsStorage.getQuestions().size(); ++i) {
-            System.out.println("Вопрос " + (i + 1) + QuestionsStorage.getQuestions().get(i).getName());
+            System.out.println("Вопрос " + (i + 1) + ": " + QuestionsStorage.getQuestions().get(i).getName());
         }
 
         System.out.print("Введите номер вопроса, который вы хотите удалить: ");

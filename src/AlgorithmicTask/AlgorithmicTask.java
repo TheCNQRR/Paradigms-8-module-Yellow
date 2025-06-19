@@ -30,7 +30,7 @@ public class AlgorithmicTask extends Task {
         else {
             System.out.println("Языки программирования: ");
             for (int i = 0; i < programmingLanguages.size(); ++i) {
-                System.out.println("Язык " + (i + 1) + programmingLanguages.get(i).getName());
+                System.out.println("Язык " + (i + 1) + ": " + programmingLanguages.get(i).getName());
             }
         }
     }

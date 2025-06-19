@@ -254,6 +254,10 @@ public class CRUDAlgorithmicTask {
                                     AlgorithmicTasksStorage.replaceAlgorithmicTask(choice - 1, newAlgorithmicTask);
                                     System.out.println("Язык программирования добавлен!");
                                 }
+                                break;
+                            }
+                            default: {
+                                System.out.println("Ошибка, неверная команда!");
                             }
                         }
                         break;
@@ -389,7 +393,7 @@ public class CRUDAlgorithmicTask {
 
         AlgorithmicTasksStorage.writeAllTasks();
 
-        System.out.print("Введите номер задания, которое хотите удалить: ");
+        System.out.print("Введите номер задания, которое вы хотите удалить: ");
         int choice = readIntInput();
 
         if (choice > AlgorithmicTasksStorage.getAlgorithmicTasks().size() || choice < 1) {

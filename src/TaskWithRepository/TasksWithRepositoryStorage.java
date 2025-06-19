@@ -17,6 +17,16 @@ public class TasksWithRepositoryStorage {
         }
         else {
             for (int i = 0; i < tasksWithRepository.size(); ++i) {
+                System.out.println("Задание " + (i + 1) + ": " + tasksWithRepository.get(i).getName());
+            }
+        }
+    }
+    public static void writeAllTasksFull() {
+        if (tasksWithRepository.isEmpty()) {
+            System.out.println("Список заданий с репозиторием пуст!");
+        }
+        else {
+            for (int i = 0; i < tasksWithRepository.size(); ++i) {
                 System.out.println("{");
                 System.out.println("Задание " + (i + 1) + ": " + tasksWithRepository.get(i).getName());
                 System.out.println("Текст задания: " + tasksWithRepository.get(i).getTaskText());

@@ -30,7 +30,7 @@ public class TaskWithRepositoryMenu {
                     break;
                 }
                 case 5: {
-                    TasksWithRepositoryStorage.writeAllTasks();
+                    TasksWithRepositoryStorage.writeAllTasksFull();
                     break;
                 }
                 case 0: {

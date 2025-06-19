@@ -15,10 +15,28 @@ public class AlgorithmicTasksStorage {
         }
         else {
             for (int i = 0; i < algorithmicTasks.size(); ++i) {
+                System.out.println("Задание " + (i + 1) + ": " + algorithmicTasks.get(i).getName());
+            }
+        }
+    }
+
+    public static void writeAllTasksFull() {
+        if (algorithmicTasks.isEmpty()) {
+            System.out.println("Список заданий по алгоритмике пуст!");
+        }
+        else {
+            for (int i = 0; i < algorithmicTasks.size(); ++i) {
                 System.out.println("{");
                 System.out.println("Задание " + (i + 1) + ": " + algorithmicTasks.get(i).getName());
                 System.out.println("Текст задания: " + algorithmicTasks.get(i).getTaskText());
                 System.out.println("Пример: " + algorithmicTasks.get(i).getTaskExample());
+                if (algorithmicTasks.get(i).getProgrammingLanguage().isEmpty()) {
+                    System.out.println("Список языков программирования пуст");
+                }
+                else {
+                    System.out.println("Языки программирования:");
+                    algorithmicTasks.get(i).writeLanguagesInTask();
+                }
                 System.out.println("}");
             }
         }
