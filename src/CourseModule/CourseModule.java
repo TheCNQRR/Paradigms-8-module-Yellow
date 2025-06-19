@@ -44,7 +44,6 @@ public class CourseModule extends Topic {
     public void removeTaskAtIndex(int index) { tasks.remove(index); }
     public void removeTaskObject(Task task) { tasks.remove(task); }
     public ArrayList<Task> getTasks() { return new ArrayList<>(tasks); }
-    //TODO опрос
     public void writeAllTasks() {
         for (int i = 0; i < tasks.size(); ++i) {
             Task task = tasks.get(i);
@@ -57,9 +56,14 @@ public class CourseModule extends Topic {
             System.out.println("Задание " + (i + 1) + ": " + task.getName() + " [" + type + "]");
             System.out.println("Текст задания: " + task.getTaskText());
             System.out.println("Пример: " + task.getTaskExample());
-            if (task.getSolution() != null) { System.out.println("Решение: " + task.getSolution().getSolutionText()); }
             if (task instanceof AlgorithmicTask) { ((AlgorithmicTask) task).writeLanguagesInTask(); }
-            if (task instanceof TaskWithRepository) { System.out.println("Ссылка на репозиторий: " + ((TaskWithRepository) task).getRepositoryReference()); }
+            else if (task instanceof TaskWithRepository) { System.out.println("Ссылка на репозиторий: " + ((TaskWithRepository) task).getRepositoryReference()); }
+            else if (task instanceof Survey) {
+                System.out.println("Список вопросов: ");
+                System.out.println("[");
+                ((Survey) task).writeAllQuestions();
+                System.out.println("]");
+            }
             System.out.println("}");
         }
     }

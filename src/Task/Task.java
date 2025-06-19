@@ -14,8 +14,4 @@ public abstract class Task {
     private String taskExample;
     public void setTaskExample(String taskExample) { this.taskExample = taskExample; }
     public String getTaskExample() { return taskExample; }
-
-    protected Solution solution;
-    public Solution getSolution() { return solution; }
-    public void setSolution(Solution solution) { this.solution = solution; }
 }

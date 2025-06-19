@@ -5,9 +5,11 @@ import Course.CoursesMenu;
 import ProgrammingLanguage.ProgrammingLanguagesMenu;
 import AlgorithmicTask.AlgorithmicTasksMenu;
 import CourseModule.ModulesMenu;
+import Question.QuestionMenu;
 import Section.SectionMenu;
-import Topic.Topic;
 import Topic.TopicMenu;
+import TaskWithRepository.TaskWithRepositoryMenu;
+import Survey.SurveyMenu;
 
 import static ProgramSystem.Utils.readIntInput;
 
@@ -38,6 +40,18 @@ public class Console {
                 }
                 case 5: {
                     AlgorithmicTasksMenu.algorithmicTasksMenu();
+                    break;
+                }
+                case 6: {
+                    TaskWithRepositoryMenu.tasksWithRepositoryMenu();
+                    break;
+                }
+                case 8: {
+                    SurveyMenu.surveyMenu();
+                    break;
+                }
+                case 9: {
+                    QuestionMenu.questionsMenu();
                     break;
                 }
                 case 10: {

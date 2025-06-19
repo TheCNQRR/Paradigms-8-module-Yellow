@@ -6,7 +6,7 @@ import AlgorithmicTask.CRUDAlgorithmicTask;
 import static ProgramSystem.Utils.readIntInput;
 
 public class TaskWithRepositoryMenu {
-    public static void algorithmicTasksMenu() {
+    public static void tasksWithRepositoryMenu() {
         while (true) {
             showTaskWithRepositoryMenu();
 
