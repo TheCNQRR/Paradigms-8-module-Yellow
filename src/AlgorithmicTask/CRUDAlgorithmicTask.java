@@ -397,6 +397,14 @@ public class CRUDAlgorithmicTask {
             return;
         }
 
+        for (int i = 0; i < CoursesStorage.getCourses().size(); ++i) {
+            for (int j = 0; j < CoursesStorage.getCourses().get(i).getModules().size(); ++j) {
+                if (CoursesStorage.getCourses().get(i).getModules().get(j).getTasks().contains(AlgorithmicTasksStorage.getAlgorithmicTasks().get(choice - 1))) {
+                    CoursesStorage.getCourses().get(i).getModules().get(j).removeTaskObject(AlgorithmicTasksStorage.getAlgorithmicTasks().get(choice - 1));
+                }
+            }
+        }
+
         AlgorithmicTasksStorage.removeAlgorithmicTaskAtIndex(choice - 1);
         System.out.println("Задание удалено!");
     }

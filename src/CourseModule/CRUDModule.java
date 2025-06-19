@@ -143,7 +143,7 @@ public class CRUDModule {
                             System.out.println("Список потомков пуст!");
                         }
                         if (CoursesStorage.getCourses().get(i).getModules().get(j).getTasks().isEmpty()) {
-                            System.out.println("Список задание пуст");
+                            System.out.println("Список заданий пуст");
                         }
                         else {
                             System.out.println("Список заданий: ");
