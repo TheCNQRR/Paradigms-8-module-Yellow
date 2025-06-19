@@ -36,11 +36,11 @@ public class Console {
                     SectionMenu.sectionsMenu();
                     break;
                 }
-                case 6: {
+                case 5: {
                     AlgorithmicTasksMenu.algorithmicTasksMenu();
                     break;
                 }
-                case 11: {
+                case 10: {
                     ProgrammingLanguagesMenu.programmingLanguagesMenu();
                     break;
                 }
