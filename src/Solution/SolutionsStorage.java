@@ -123,7 +123,81 @@ public class SolutionsStorage {
         }
     }
 
-        public static void writeSolutionsInVisibleModules() {
+    public static void writeSolutionsInVisibleModules() {
+        CoursesStorage.writeAllCourses();
+        System.out.print("Введите номер класса, в котором вы хотите вывести решения: ");
+        int courseNumber = readIntInput();
 
+        if (courseNumber < 1 || courseNumber > CoursesStorage.getCourses().size()) {
+            System.out.println("Ошибка, вы ввели неверный номер!");
+            return;
+        }
+
+        Course course = CoursesStorage.getCourses().get(courseNumber - 1);
+
+        if (course.getTopicsNames().isEmpty()) {
+            System.out.println("Список тем пуст!");
+            return;
+        }
+
+        int topicCounter = 1;
+        for (int i = 0; i < course.getTopicsNames().size(); ++i) {
+            String topicName = course.getTopicsNames().get(i);
+            boolean isTopicVisible = course.isTopicVisible(topicName);
+
+            if (isTopicVisible) {
+                System.out.println("|-Тема " + topicCounter + ": " + topicName);
+                topicCounter++;
+                int moduleCounter = 1;
+
+                for (Topic topic : course.getTopics()) {
+                    if (topic instanceof CourseModule) {
+                        CourseModule module = (CourseModule) topic;
+                        if (module.getName().equals(topicName)) {
+                            int counter = 1;
+                            System.out.println("|--Модуль " + moduleCounter + ": " + module.getModuleName());
+                            for (int j = 0; j < module.getTasks().size(); ++j) {
+                                for (int k = 0; k < solutions.size(); ++k) {
+                                    for (int l = 0; l < solutions.get(k).getTask().size(); ++l) {
+                                        if (module.getTasks().get(j) == solutions.get(k).getTask().get(l)) {
+                                            System.out.println("|---Решение " + counter + ": " + solutions.get(k).getName());
+                                            counter++;
+                                        }
+                                    }
+                                }
+                            }
+                            moduleCounter++;
+
+                            if (!module.getChildren().isEmpty()) {
+                                printNestedModulesWithVisibility(module, 3);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    public static void printNestedModulesWithVisibility(CourseModule parentModule, int depth) {
+        int childCounter = 1;
+        for (CourseModule child : parentModule.getChildren()) {
+            int counter = 1;
+            System.out.println("|" + "-".repeat(depth) + "Модуль " + childCounter + ": " + child.getModuleName());
+            for (int j = 0; j < child.getTasks().size(); ++j) {
+                for (int k = 0; k < solutions.size(); ++k) {
+                    for (int l = 0; l < solutions.get(k).getTask().size(); ++l) {
+                        if (child.getTasks().get(j) == solutions.get(k).getTask().get(l)) {
+                            System.out.println("|" + "-".repeat(depth + 1) + "Решение " + counter + ": " + solutions.get(k).getName());
+                            counter++;
+                        }
+                    }
+                }
+            }
+            childCounter++;
+
+            if (!child.getChildren().isEmpty()) {
+                printNestedModules(child, depth + 1);
+            }
+        }
     }
 }
